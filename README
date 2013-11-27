@@ -1,0 +1,35 @@
+Chamada de sistema: sys_imortal(int pid, char op)
+  Arquivo:	imortal.c (linux-3.12/arch/x86/kernel/imortal.c)
+ 
+  Descrição:	Cria uma lista de processos que serão imortais, ou seja, não terminarão ao receber o sinal kill
+
+  Parametros: 	id de um processo, operador de inserir (1) ou remover (0) um processo da lista de imortais 
+
+  Retorno:	Retorna 0 em caso de sucesso, 1 em caso de erro
+
+  Erros:	Remover um processo que já esta na lista;
+		Inserir um processo alem da capacidade da lista (100 processos no máximo);
+		Operador inválido;
+
+
+Arquivos alterados:
+  1) linux-3.12/arch/x86/syscalls/syscall_32.tlb 
+      -> acrescentamos a linha no final:
+	  351     i386    imortal                  sys_imortal
+
+  2) linux-3.12/include/linux/syscalls.h 
+      -> acrescentamos a linha no final:
+	  asmlinkage long sys_mycall(void);
+      -> acrescentamos as linhas logo antes dos includes:
+	  extern int contador_imortais;
+	  extern int lista_imortais[100];
+
+  3) linux-3.12/arch/x86/kernel/Makefile
+      ->acrescentamos a linha no final:
+	  obj-y                                   += imortal.o
+
+
+Instruções:
+1)Após alterar os arquivos, executar "make" em /linux-3.12
+2)Mover o executavel teste para o mesmo diretório que contem linux-3.12 e mc504.img
+3)Executar qemu-system-x86_64 -hda mc504.img -kernel linux-3.12/arch/i386/boot/bzImage -append "ro root=/dev/hda" -hdb teste.out
