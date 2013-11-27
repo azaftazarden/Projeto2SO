@@ -25,11 +25,25 @@ Arquivos alterados:
 	  extern int lista_imortais[100];
 
   3) linux-3.12/arch/x86/kernel/Makefile
-      ->acrescentamos a linha no final:
+      -> acrescentamos a linha no final:
 	  obj-y                                   += imortal.o
+
+  4) linux-3.12/kernel/signal.c
+      -> acrescentamos na linha 2909:
+	  int i;
+	  for(i=0; i<contador_imortais; i++)
+	     if(lista_imortais[i] == pid) return 0;
+
+  5) linux-3.12/arch/x86/kernel/imortal.c
+      -> copiar imortal.c para o path acima
 
 
 Instruções:
 1)Após alterar os arquivos, executar "make" em /linux-3.12
-2)Mover o executavel teste para o mesmo diretório que contem linux-3.12 e mc504.img
-3)Executar qemu-system-x86_64 -hda mc504.img -kernel linux-3.12/arch/i386/boot/bzImage -append "ro root=/dev/hda" -hdb teste.out
+2)Compilar para linux teste.c no site http://www.onlinecompiler.net/ccplusplus
+2.5)Mover o executavel teste para o mesmo diretório que contem linux-3.12 e mc504.img
+3)Executar $ qemu-system-x86_64 -hda mc504.img -kernel linux-3.12/arch/i386/boot/bzImage -append "ro root=/dev/hda" -hdb teste.out
+4)Executar no qemu:
+    $ cat /dev/hdb > mycall
+    $ chmod +x mycall
+    $ ./mycall
