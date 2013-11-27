@@ -1,3 +1,7 @@
+Rafael Ossamu Gouvêa 106905
+Marcelo Teixeira 122128
+
+
 Chamada de sistema: sys_imortal(int pid, char op)
   Arquivo:	imortal.c (linux-3.12/arch/x86/kernel/imortal.c)
  
